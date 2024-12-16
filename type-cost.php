@@ -5,6 +5,7 @@ $second='10';
 $data=$var+$second;
 echo $data;
 echo gettype($data);
+echo "<br>";
 ?>
 <!-- Implicit Typecasting  in second type  concatenation  -->
 <?php
@@ -13,4 +14,4 @@ $second='10';
 $data=$var.$second;
 echo $data;
 echo gettype($data);
-?>
+?>  

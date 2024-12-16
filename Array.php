@@ -25,7 +25,5 @@ foreach($name as $val){
 
 foreach($age as $key=>$val){
     echo $key. "ka Age =".$val."<br>";
-}
-
-
+} 
 ?>
