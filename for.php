@@ -44,9 +44,7 @@
 // Factorial Program
 
 
-// $fact = 1
-
-// ;
+// $fact = 1;
 // for ($i = 1; $i <= 5; $i++) {
 //     $fact=$fact*$i; 
 // }
@@ -55,15 +53,15 @@
 
 
 
-for ($i = 0; $i<= 9; $i++){
-    for($j=0; $j<=9;$j++){
-        if($j<9){
-            echo $i."".$j.",";
-        }
-        else {
-            echo $i."".$j;
-        }
-    }
-    echo "<br>";
-}
+// for ($i = 0; $i<= 9; $i++){
+//     for($j=0; $j<=9;$j++){
+//         if($j<9){
+//             echo $i."".$j.",";
+//         }
+//         else {
+//             echo $i."".$j;
+//         }
+//     }
+//     echo "<br>";
+// }
 ?>

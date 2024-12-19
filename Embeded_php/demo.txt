@@ -1,0 +1,10 @@
+fwrite Function Used to craete a file and write some text inside file...
+fwrite Function Used to craete a file and write some text inside file...
+It is Demo File ....This is read write modeThis is read write mode
+This is read write modeThis is read write mode
+This is read write modeThis is read write mode
+This is read write modeThis is read write mode
+This is read write modeThis is read write mode
+This is read write modeThis is read write mode
+This is read write modeThis is read write mode
+This is read write mode
