@@ -1,5 +1,10 @@
 <?php
 
+session_start();
+if (!isset($_SESSION['user'])){
+    header('Location:login_form.php');
+}
+
 $conn = mysqli_connect("localhost","root","","taskwork");
 if($_SERVER["REQUEST_METHOD"]=='POST'){
     if(empty($_POST['fname'])){

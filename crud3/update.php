@@ -1,35 +1,43 @@
 <?php
-$conn = mysqli_connect("Localhost","root","","techphp25");
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $id = $_POST['uid'];
-    $username=$_POST['username'];
-    $dob=$_POST['dob'];
-    $gender=$_POST['gender'];
-    $country=$_POST['country'];
-    $subject= implode(",", $_POST['subject']);
-    $descri=$_POST['descri'];
+$conn = mysqli_connect("Localhost", "root", "", "techphp25");
 
-    $sql = "Update all_field set username='$username',dob='$dob',gender='$gender',country='$country',
-    subject='$subject',descri='$descri' where id=$id";
-    if(mysqli_query($conn,$sql)){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['uid'];
+    $username = $_POST['username'];
+    $dob = $_POST['dob'];
+    $gender = $_POST['gender'];
+    $country = $_POST['country'];
+    $subject = implode(',', $_POST['subject']);
+    $descri = $_POST['descri'];
+
+    $sql = "UPDATE all_field SET username='$username', dob='$dob', gender='$gender', country='$country', 
+            subject='$subject', descri='$descri' WHERE id=$id";
+    
+    if (mysqli_query($conn, $sql)) {
         echo "<script>
-        alert('Record Update Successfully...');
+        alert('Record Updated Successfully...');
         window.location.href='read.php';
-        
         </script>";
     }
 }
-if(isset($_GET['id'])){
+
+if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $sql = "Select * from all_field where id=$id";
-    $result = mysqli_query($conn,$sql);
-    if(mysqli_num_rows($result)>0){
-        $data = mysqli_fetch_assoc($result);
-//     }
-// }
+    $sql = "SELECT * FROM all_field WHERE id=$id";
+    $single = mysqli_query($conn, $sql);
+    
+    if (mysqli_num_rows($single) > 0) {
+        $result = mysqli_fetch_assoc($single);
+        $subject = explode(',', $result['subject']);
+    } else {
+        header('Location: read.php');
+        exit;
+    }
+} else {
+    header('Location: read.php');
+    exit;
+}
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +46,7 @@ if(isset($_GET['id'])){
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>User Form</title>
   <style>
+    /* CSS as per your original code */
     body {
       font-family: Arial, sans-serif;
       background-color: #f4f4f9;
@@ -104,61 +113,53 @@ if(isset($_GET['id'])){
 </head>
 <body>
   <div class="form-container">
-    <h2>Create User</h2>
+    <h2>Update User</h2>
     <form action="#" method="post">
       <div class="form-group">
-       
+        <input type="hidden" value="<?= $result['id'] ?>" name="uid">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" value="<?= $result['username'] ?>" id="username" name="username" required>
       </div>
       <div class="form-group">
         <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" name="dob" required>
+        <input type="date" value="<?= $result['dob'] ?>" id="dob" name="dob" required>
       </div>
       <div class="form-group">
         <label>Gender</label>
         <div class="gender-group">
-          <label><input type="radio" name="gender"<?= $result['gender']=='male'?'checked':''?> value="Male" required> Male</label>
-          <label><input type="radio" name="gender"<?= $result['gender']=='female'?'checked':''?> value="Female" required> Female</label>
-          <label><input type="radio" name="gender" value="Other" required> Other</label>
+          <label><input type="radio" name="gender" <?= $result['gender'] == 'Male' ? 'checked' : '' ?> value="Male" required> Male</label>
+          <label><input type="radio" name="gender" <?= $result['gender'] == 'Female' ? 'checked' : '' ?> value="Female" required> Female</label>
+          <label><input type="radio" name="gender" <?= $result['gender'] == 'Other' ? 'checked' : '' ?> value="Other" required> Other</label>
         </div>
       </div>
       <div class="form-group">
         <label for="country">Country</label>
         <select id="country" name="country" required>
           <option value="">Select Country</option>
-          <option <?= $result['country']=='USA'?'selected':''?> value="USA">USA</option>
-          <option <?= $result['country']=='Canada'?'selected':''?> value="Canada">Canada</option>
-          <option <?= $result['country']=='UK'?'selected':''?> value="UK">UK</option>
-          <option <?= $result['country']=='India'?'selected':''?> value="India">India</option>
-          <option value="Australia">Australia</option>
+          <option <?= $result['country'] == 'USA' ? 'selected' : '' ?> value="USA">USA</option>
+          <option <?= $result['country'] == 'Canada' ? 'selected' : '' ?> value="Canada">Canada</option>
+          <option <?= $result['country'] == 'UK' ? 'selected' : '' ?> value="UK">UK</option>
+          <option <?= $result['country'] == 'India' ? 'selected' : '' ?> value="India">India</option>
+          <option <?= $result['country'] == 'Australia' ? 'selected' : '' ?> value="Australia">Australia</option>
         </select>
       </div>
       <div class="form-group">
         <label>Subjects</label>
         <div class="checkbox-group">
-          <label><input type="checkbox" name="subject[]" value="Math"> Math</label>
-          <label><input type="checkbox" name="subject[]" value="Science"> Science</label>
-          <label><input type="checkbox" name="subject[]" value="History"> History</label>
-          <label><input type="checkbox" name="subject[]" value="Art"> Art</label>
+          <label><input type="checkbox" <?= in_array('Math', $subject) ? 'checked' : '' ?> name="subject[]" value="Math"> Math</label>
+          <label><input type="checkbox" <?= in_array('Science', $subject) ? 'checked' : '' ?> name="subject[]" value="Science"> Science</label>
+          <label><input type="checkbox" <?= in_array('History', $subject) ? 'checked' : '' ?> name="subject[]" value="History"> History</label>
+          <label><input type="checkbox" <?= in_array('Art', $subject) ? 'checked' : '' ?> name="subject[]" value="Art"> Art</label>
         </div>
       </div>
       <div class="form-group">
-        <label for="description">Description</label>
-        <textarea id="descri" name="descri" rows="4" placeholder="Write about yourself..."></textarea>
+        <label for="descri">Description</label>
+        <textarea id="descri" name="descri" rows="4" placeholder="Write about yourself..."><?= $result['descri']?></textarea>
       </div>
       <div class="form-group">
-        <button type="submit">Submit</button>
+        <button type="submit">Update Account</button>
       </div>
     </form>
   </div>
 </body>
 </html>
-
-<?php
-    }
-}
-else{
-    header('Location:read.php');
-}
-?>

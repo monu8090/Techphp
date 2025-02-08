@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])){
+    header('Location:login_data.php');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

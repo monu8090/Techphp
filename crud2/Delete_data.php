@@ -1,4 +1,14 @@
 <?php
+session_start();
+if (!isset($_SESSION['user'])){
+    header('Location:fetch_data.php');
+}
+
+
+
+
+
+
 if(isset($_GET["id"])){
     $id = $_GET["id"];
     $conn = mysqli_connect("localhost","root","","taskwork");

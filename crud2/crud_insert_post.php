@@ -1,4 +1,13 @@
 <?php
+
+session_start();
+if (!isset($_SESSION['user'])){
+    header('Location:fetch_data.php');
+}
+
+
+
+
 $conn = mysqli_connect(hostname: "localhost",username: "root",password: "",database: "taskwork");
 if ($_SERVER["REQUEST_METHOD"]=='POST'){
     if(empty($_POST['fname'])){
